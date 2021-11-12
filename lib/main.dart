@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'presentation/custom_icons_icons.dart';
 
 void main() {
   runApp(const MyApp());
@@ -63,10 +64,18 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: ListView(
+              padding: const EdgeInsets.all(8),
+              children: <Widget>[
+                TextButton.icon(
+                  icon: Icon(CustomIcons.dice_d20),
+                  label: Text('Random Character Generator'),
+                  onPressed: () {},
+                )
+
+              ],
+            )
         ),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+      ); // This trailing comma makes auto-formatting nicer for build methods.
   }
 }
