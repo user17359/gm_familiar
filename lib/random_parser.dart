@@ -17,16 +17,22 @@ class ReturnedObject {
 Future<ReturnedObject> GenerateParameter(String src) async {
   var rng = new Random();
   bool _showIcon;
+  IconData _icon = CustomIcons.archer;
   String _value;
   String fileContent = await rootBundle.loadString(src);
   List<String> fileLines = fileContent.split("\n");
+  int random = (rng.nextInt(fileLines.length - 1) + 1);
   if(fileLines[0].contains('n')) {
-    int random = rng.nextInt(fileLines.length - 1);
     _showIcon = false;
     _value = fileLines[random];
   } else {
     _showIcon = true;
-    _value = "placeholder";
+    List<String> parametersInLine = fileLines[random].split(";");
+    String _temp = parametersInLine[1].trimRight();
+    _value = parametersInLine[0];
+    print(parametersInLine[1]);
+    print(getIcons.containsKey(parametersInLine[1]));
+    _icon = getIcons[_temp] ?? CustomIcons.plain_dagger;
   }
-  return ReturnedObject(CustomIcons.archer, _value, _showIcon);
+  return ReturnedObject(_icon, _value, _showIcon);
 }

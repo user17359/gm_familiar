@@ -52,7 +52,7 @@ class _CharacterGeneratorState extends State<StatefulCharacterGenerator> {
   final List<String> parameterName = <String>[];
   final List<IconData> icon = <IconData>[];
   final List<String> values = <String>[];
-  final List<bool> showIcon = <bool>[false];
+  final List<bool> showIcon = <bool>[];
   final List<String> availableRandomGenerators = <String>['english_names_m', 'arabian_names_f', 'alignments_dnd', 'zodiac_signs'];
   String dropdownValue = 'english_names_m';
   ReturnedObject _rO = ReturnedObject(CustomIcons.archer, '', false);
@@ -91,7 +91,7 @@ class _CharacterGeneratorState extends State<StatefulCharacterGenerator> {
                           showIcon[index] ? WidgetSpan(
                             child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                              child: Icon(icon[index], size: 24),
+                              child: Icon(icon[index], size: 20),
                             ),
                           ): const TextSpan(text: ""),
                         ],),
@@ -146,7 +146,7 @@ class _CharacterGeneratorState extends State<StatefulCharacterGenerator> {
                 child: const Text('Cancel'),
               ),
               TextButton(
-                onPressed: () async => {_rO = await GenerateParameter("assets/english_names_m.txt"), Navigator.pop(context, 'OK'), addItemToList(parameterNameController.text, _rO.icon, _rO.values, _rO.showIcon)},
+                onPressed: () async => {_rO = await GenerateParameter("assets/" + dropdownValue + ".txt"), Navigator.pop(context, 'OK'), addItemToList(parameterNameController.text, _rO.icon, _rO.values, _rO.showIcon)},
                 child: const Text('Add'),
               ),
             ],
