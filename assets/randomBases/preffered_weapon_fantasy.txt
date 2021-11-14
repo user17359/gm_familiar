@@ -1,0 +1,9 @@
+y
+Broadsword;broadsword
+Crossbow;crossbow
+Wand;fairy_wand
+Kunai;kunai
+Warhammer;large_hammer
+Musket;musket
+Dagger;plain_dagger
+Sickle;sickle
