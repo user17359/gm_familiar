@@ -50,6 +50,7 @@ class StatefulCharacterGenerator extends StatefulWidget {
 class _CharacterGeneratorState extends State<StatefulCharacterGenerator> {
 
   TextEditingController parameterNameController = TextEditingController();
+  final List<String> parameterFile = <String>[];
   final List<String> parameterName = <String>[];
   final List<IconData> icon = <IconData>[];
   final List<String> values = <String>[];
@@ -57,12 +58,21 @@ class _CharacterGeneratorState extends State<StatefulCharacterGenerator> {
   String dropdownValue = '';
   ReturnedObject _rO = ReturnedObject(CustomIcons.archer, '', false);
 
-  void addItemToList(String _parameterName,IconData _icon,String _values, bool _showIcon){
+  void addItemToList(String _parameterName,IconData _icon,String _values, bool _showIcon, String _parameterFile){
     setState(() {
+      parameterFile.add(_parameterFile);
       parameterName.add(_parameterName);
       icon.add(_icon);
       values.add(_values);
       showIcon.add(_showIcon);
+    });
+  }
+
+  void replaceItemInList(int id, IconData _icon,String _values, bool _showIcon){
+    setState(() {
+      icon[id] = (_icon);
+      values[id] = (_values);
+      showIcon[id] = (_showIcon);
     });
   }
 
@@ -81,21 +91,34 @@ class _CharacterGeneratorState extends State<StatefulCharacterGenerator> {
                     height: 50,
                     color: Colors.purple[200],
                     margin: EdgeInsets.all(2),
-                    child: Center(
-                        child: RichText(text: TextSpan(
-                          children: [
+                    child: Row(
+                        children: [Expanded(
+                          child: RichText(text: TextSpan(
+                            children: [
 
-                          TextSpan(text: ('${parameterName[index]}: '), style: const TextStyle(color: Colors.black, fontSize: 20)),
-                          TextSpan(text: '${values[index]}', style:  const TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold)),
+                            TextSpan(text: ('  ${parameterName[index]}: '), style: const TextStyle(color: Colors.black, fontSize: 20)),
+                            TextSpan(text: '${values[index]}', style:  const TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold)),
 
-                          showIcon[index] ? WidgetSpan(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                              child: Icon(icon[index], size: 20),
-                            ),
-                          ): const TextSpan(text: ""),
-                        ],),
+                            showIcon[index] ? WidgetSpan(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                                child: Icon(icon[index], size: 20),
+                              ),
+                            ): const TextSpan(text: ""),
+
+                          ],),
+                          ),
+
+                        ),
+                        Column(
+                          children: [IconButton(
+                            icon: const Icon(CustomIcons.dice),
+                          color: Colors.purple,
+                          onPressed: () async => {_rO = await GenerateParameter("assets/randomBases/" + parameterFile[index] + ".txt"), replaceItemInList(index, _rO.icon, _rO.values, _rO.showIcon)},
+                          )]
                         )
+
+                    ]
                     ),
                   );
                 }
@@ -158,7 +181,7 @@ class _CharacterGeneratorState extends State<StatefulCharacterGenerator> {
                 child: const Text('Cancel'),
               ),
               TextButton(
-                onPressed: () async => {_rO = await GenerateParameter("assets/randomBases/" + dropdownValue + ".txt"), Navigator.pop(context, 'OK'), addItemToList(parameterNameController.text, _rO.icon, _rO.values, _rO.showIcon)},
+                onPressed: () async => {_rO = await GenerateParameter("assets/randomBases/" + dropdownValue + ".txt"), Navigator.pop(context, 'OK'), addItemToList(parameterNameController.text, _rO.icon, _rO.values, _rO.showIcon, dropdownValue)},
                 child: const Text('Add'),
               ),
             ],
