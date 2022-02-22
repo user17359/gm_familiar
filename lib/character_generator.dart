@@ -47,32 +47,41 @@ class StatefulCharacterGenerator extends StatefulWidget {
   State<StatefulCharacterGenerator> createState() => _CharacterGeneratorState();
 }
 
+class Parameter{
+  String parameterFile;
+  String parameterName;
+  IconData icon;
+  String values;
+  bool showIcon;
+
+  Parameter(this.parameterFile, this.parameterName, this.icon, this.values, this.showIcon);
+}
+
 class _CharacterGeneratorState extends State<StatefulCharacterGenerator> {
 
   TextEditingController parameterNameController = TextEditingController();
-  final List<String> parameterFile = <String>[];
-  final List<String> parameterName = <String>[];
-  final List<IconData> icon = <IconData>[];
-  final List<String> values = <String>[];
-  final List<bool> showIcon = <bool>[];
+  final List<Parameter> parameters = <Parameter>[];
+
   String dropdownValue = '';
   ReturnedObject _rO = ReturnedObject(CustomIcons.archer, '', false);
 
   void addItemToList(String _parameterName,IconData _icon,String _values, bool _showIcon, String _parameterFile){
     setState(() {
-      parameterFile.add(_parameterFile);
-      parameterName.add(_parameterName);
-      icon.add(_icon);
-      values.add(_values);
-      showIcon.add(_showIcon);
+      parameters.add(Parameter(_parameterFile, _parameterName, _icon, _values, _showIcon));
     });
   }
 
   void replaceItemInList(int id, IconData _icon,String _values, bool _showIcon){
     setState(() {
-      icon[id] = (_icon);
-      values[id] = (_values);
-      showIcon[id] = (_showIcon);
+      parameters[id].icon = (_icon);
+      parameters[id].values = (_values);
+      parameters[id].showIcon = (_showIcon);
+    });
+  }
+
+  void removeItemFromList(int id){
+    setState(() {
+      parameters.removeAt(id);
     });
   }
 
@@ -85,24 +94,24 @@ class _CharacterGeneratorState extends State<StatefulCharacterGenerator> {
       body: Center(
           child: ListView.builder(
                 padding: const EdgeInsets.all(8),
-                itemCount: parameterName.length,
+                itemCount: parameters.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
                     height: 50,
                     color: Colors.purple[200],
-                    margin: EdgeInsets.all(2),
+                    margin: const EdgeInsets.all(2),
                     child: Row(
                         children: [Expanded(
                           child: RichText(text: TextSpan(
                             children: [
 
-                            TextSpan(text: ('  ${parameterName[index]}: '), style: const TextStyle(color: Colors.black, fontSize: 20)),
-                            TextSpan(text: '${values[index]}', style:  const TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold)),
+                            TextSpan(text: ('  ${parameters[index].parameterName}: '), style: const TextStyle(color: Colors.black, fontSize: 20)),
+                            TextSpan(text: parameters[index].values, style:  const TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold)),
 
-                            showIcon[index] ? WidgetSpan(
+                            parameters[index].showIcon ? WidgetSpan(
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                                child: Icon(icon[index], size: 20),
+                                child: Icon(parameters[index].icon, size: 20),
                               ),
                             ): const TextSpan(text: ""),
 
@@ -114,10 +123,16 @@ class _CharacterGeneratorState extends State<StatefulCharacterGenerator> {
                           children: [IconButton(
                             icon: const Icon(CustomIcons.dice),
                           color: Colors.purple,
-                          onPressed: () async => {_rO = await GenerateParameter("assets/randomBases/" + parameterFile[index] + ".txt"), replaceItemInList(index, _rO.icon, _rO.values, _rO.showIcon)},
+                          onPressed: () async => {_rO = await GenerateParameter("assets/randomBases/" + parameters[index].parameterFile + ".txt"), replaceItemInList(index, _rO.icon, _rO.values, _rO.showIcon)},
                           )]
+                        ),
+                        Column(
+                            children: [IconButton(
+                              icon: const Icon(Icons.clear),
+                              color: Colors.purple,
+                              onPressed: () {removeItemFromList(index);},
+                            )]
                         )
-
                     ]
                     ),
                   );
