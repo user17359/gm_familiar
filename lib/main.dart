@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gamemaster_familiar/battle_calculator.dart';
 import 'character_generator.dart';
 import 'presentation/custom_icons_icons.dart';
 
@@ -69,11 +70,19 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.all(8),
               children: <Widget>[
                 TextButton.icon(
-                  icon: Icon(CustomIcons.dice_d20),
-                  label: Text('Random Character Generator'),
+                  icon: const Icon(CustomIcons.dice_d20),
+                  label: const Text('Random Character Generator'),
                   onPressed: () {Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const CharacterGenerator()),
+                  );},
+                ),
+                TextButton.icon(
+                  icon: const Icon(CustomIcons.crossed_swords),
+                  label: const Text('Battle Calculator'),
+                  onPressed: () {Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const BattleCalculator()),
                   );},
                 )
 
