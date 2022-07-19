@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/gamemaster_familiar.iml" filepath="$PROJECT_DIR$/gamemaster_familiar.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android/gamemaster_familiar_android.iml" filepath="$PROJECT_DIR$/android/gamemaster_familiar_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/app/src/debug/debug.iml" filepath="$PROJECT_DIR$/android/app/src/debug/debug.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gm_familiar.iml" filepath="$PROJECT_DIR$/gm_familiar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/app/src/profile/profile.iml" filepath="$PROJECT_DIR$/android/app/src/profile/profile.iml" />
     </modules>
   </component>
 </project>
