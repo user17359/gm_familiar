@@ -90,6 +90,31 @@ class _CharacterGeneratorState extends State<StatefulCharacterGenerator> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Character generator"),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.file_open),
+            onPressed: () {
+
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.save),
+            onPressed: () {
+
+            },
+          ),
+          IconButton(
+            icon: const Icon(CustomIcons.dice),
+            onPressed: () async => {
+              for(int index = 0; index < parameters.length; index++){
+                _rO = await GenerateParameter(
+                    "assets/randomBases/" + parameters[index].parameterFile +
+                        ".txt"),
+                replaceItemInList(index, _rO.icon, _rO.values, _rO.showIcon)
+              }
+            },
+          ),
+        ],
       ),
       body: Center(
           child: ListView.builder(
